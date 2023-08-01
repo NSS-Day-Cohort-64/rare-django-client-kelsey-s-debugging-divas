@@ -25,7 +25,7 @@ export const PostList = () => {
 
             return <div className="post">
 
-              <div className="title"><Link to={`/PostDetails`} key={postObject.id}>{postObject.title}</Link></div>
+              <div className="title"><Link to={`/posts/${postObject.id}`} key={postObject.id}>{postObject.title}</Link></div>
               <section className="post-data" >
                 <div>{postObject.author.first_name}{postObject.author.last_name}</div>
                 <div>{postObject.category.label}</div>

@@ -3,26 +3,18 @@ import { Login } from "../components/auth/Login"
 import { Register } from "../components/auth/Register"
 import { Authorized } from "./Authorized"
 import { CategoryForm } from "../components/categories/CategoryForm"
-import { PostList } from "../components/posts/PostsList"
-
-
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
     <Routes>
-      <Route path="/login" element={<Login setToken={setToken} />} />
-      <Route path="/register" element={<Register setToken={setToken} />} />
+      <Route path="/login" element={<Login setToken={setToken} />}  />
+      <Route path="/register" element={<Register setToken={setToken} />}  />
       <Route element={<Authorized token={token} />}>
-  
-      <Route path="/posts">
-        <Route index element={<PostList setToken={setToken} />} />
-        
       </Route>
-  
-      <Route path="/categories">
-        <Route path='create' element={<CategoryForm setToken={setToken} />}  />
-  
-      </Route>
+    </Routes>
+
+    <Routes path="/categories">
+      <Route path="/categories" element={<CategoryForm setToken={setToken} />}  />
   
     </Routes>
 

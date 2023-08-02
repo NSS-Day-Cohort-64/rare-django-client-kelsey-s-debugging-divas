@@ -8,6 +8,7 @@ import PostDetails from "../components/posts/PostDetails"
 import { TagList } from "../components/tags/TagList"
 import { Category } from "../components/categories/Category"
 import { PostForm } from "../components/posts/PostForm"
+import { UserPosts } from "../components/posts/UserPosts"
 
 
 
@@ -22,6 +23,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path=":postId" element={<PostDetails setToken={setToken} />} />
         <Route path="create" element={<PostForm setToken={setToken} />} />
       </Route>
+        <Route path="myPosts" element={<UserPosts token={token} setToken={setToken} />} />
 
       <Route path="/categories">
         <Route index element={<Category setToken={setToken} />} />

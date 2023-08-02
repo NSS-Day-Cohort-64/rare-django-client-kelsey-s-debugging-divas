@@ -30,3 +30,7 @@ export const createPost = (newPost) => {
       }
     });
 };
+export const getUserPosts = (userId) => {
+  return fetch(`http://localhost:8088/posts?user_id=${userId}`)
+    .then(res => res.json())
+}

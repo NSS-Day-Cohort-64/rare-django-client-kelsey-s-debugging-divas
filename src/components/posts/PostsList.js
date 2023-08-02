@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import { getPosts } from "../../managers/PostManager"
+import { getAllPosts } from "../../managers/PostManager"
 
 
 export const PostList = () => {
@@ -10,7 +10,7 @@ export const PostList = () => {
 
   useEffect(
     () => {
-      getPosts().then((postsData) => setPosts(postsData))
+      getAllPosts().then((postsData) => setPosts(postsData))
     },
     []
   )

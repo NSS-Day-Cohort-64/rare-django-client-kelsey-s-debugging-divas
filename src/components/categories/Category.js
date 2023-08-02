@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { getCategories } from "../../managers/CategoryManager";
 import { CategoryForm } from "./CategoryForm";
+import "./categories.css"
 
 export const Category = () => {
     // State to store categories
@@ -15,20 +16,27 @@ export const Category = () => {
     }, [categories]); // Add 'categories' to the dependency array
 
     return (
-        <div>
-            <h2>Category Management</h2>
-            <ul>
-                {categories.map((category) => (
-                    <li key={category.id}>
-                        {category.label}{" "}
-                        <Link to={`/categories/${category.id}/edit`}>Edit</Link>{" "}
-                        <button>Delete</button>
-                    </li>
-                ))}
-            </ul>
-
-            {/* Display the CategoryForm component */}
-            <CategoryForm />
+        <div className="page-container">
+            <h1 className="page-header">Categories</h1>
+            <div className="category-container">
+                <div className="left-side">
+                    <ul className="list">
+                        {categories.map((category) => (
+                            <li key={category.id} className="list-items">
+                                <div className="list-name">{category.label}{" "}</div>
+                                <div className="edit-and-delete">
+                                    <button className="edit-button"><Link to={`/categories/${category.id}/edit`}>Edit</Link></button>{" "}
+                                    <button className="delete-button">Delete</button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="right-side">
+                    {/* Display the CategoryForm component */}
+                    <CategoryForm />
+                </div>
+            </div>
         </div>
     );
 };

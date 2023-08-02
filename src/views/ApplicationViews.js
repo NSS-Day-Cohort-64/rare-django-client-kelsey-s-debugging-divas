@@ -1,12 +1,14 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { Login } from "../components/auth/Login";
-import { Register } from "../components/auth/Register";
-import { Authorized } from "./Authorized";
-import { CategoryForm } from "../components/categories/CategoryForm";
-import { PostList } from "../components/posts/PostsList";
-import PostDetails from "../components/posts/PostDetails";
-import { PostForm } from "../components/posts/PostForm";
+import { Route, Routes } from "react-router-dom"
+import { Login } from "../components/auth/Login"
+import { Register } from "../components/auth/Register"
+import { Authorized } from "./Authorized"
+import { CategoryForm } from "../components/categories/CategoryForm"
+import { PostList } from "../components/posts/PostsList"
+import PostDetails from "../components/posts/PostDetails"
+import { TagList } from "../components/tags/TagList"
+import { Category } from "../components/categories/Category"
+
+
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -20,8 +22,14 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="create" element={<PostForm setToken={setToken} />} />
       </Route>
 
-      
-      <Route path="/categories" element={<CategoryForm setToken={setToken} />} />
+      <Route path="/categories">
+        <Route index element={<Category setToken={setToken} />} />
+      </Route>
+
+      <Route path="/tags">
+        <Route index element={<TagList setToken={setToken} />} />
+      </Route>
+
     </Routes>
-  );
+  </>
 };

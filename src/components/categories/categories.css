@@ -1,0 +1,65 @@
+.category-container {
+  display: flex;
+}
+
+.left-side {
+  margin-left: 150px;
+}
+
+.right-side {
+  margin-left: 300px;
+}
+
+.page-header {
+  font-weight: 800;
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-left: 250px;
+  margin-top: 50px
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Distributes items on both sides */
+  border: 1px solid;
+  height: 40px;
+  width: 400px;
+  padding: 5px;
+}
+
+.list-name {
+  /* Determines how much space the list name takes */
+  flex: 1;
+  /* This will make the list name expand to fill the available space */
+}
+
+.edit-and-delete {
+  /* spacing between the edit and delete buttons */
+  margin-left: 10px;
+}
+
+.edit-button {
+  height: 25px;
+}
+
+.delete-button {
+  height: 25px;
+}
+
+.form {
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.form-title {
+  font-weight: 800;
+  font-size: 18px;
+}

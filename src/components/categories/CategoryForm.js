@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createCategory } from '../../managers/CategoryManager';
+import "./categories.css"
 
 export const CategoryForm = () => {
     const [categoryLabel, setCategoryLabel] = useState('');
@@ -23,8 +24,8 @@ export const CategoryForm = () => {
     };
 
     return (
-        <div>
-            <h2>Create Category</h2>
+        <div className="form">
+            <h2 className="form-title">Create Category</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="categoryLabel">Name:</label>
                 <input

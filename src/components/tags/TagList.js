@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from 'react-router-dom'
-import { getAllTags } from "../../managers/TagManager"
+import { getAllTags, createTag } from "../../managers/TagManager"
+import { TagForm } from "./TagForm";
 import "./tags.css"
 
 
 export const TagList = () => {
 
   const [tags, setTags] = useState([])
-  const navigate = useNavigate()
 
   useEffect(
     () => {
@@ -15,6 +15,23 @@ export const TagList = () => {
     },
     []
   )
+
+  const handleCreateTag = (newTag) => {
+    createTag(newTag)
+      .then((response) => {
+        console.log('API Response:', response);
+        if (response && response.id) {
+          // Add the new tag to the existing categories array
+          const updatedTags = [...tags, response];
+          // Sort the tags alphabetically by label before updating the state
+          updatedTags.sort((a, b) => a.label.localeCompare(b.label));
+          setTags(updatedTags);
+        } else {
+          throw new Error('Failed to create tag. Please try again later.');
+        }
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
 
@@ -35,7 +52,7 @@ export const TagList = () => {
           </ul>
         </div>
         <div className="right-side">
-
+          <TagForm handleCreateTag={handleCreateTag} />
         </div>
       </div>
     </div>

@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-import { createCategory } from '../../managers/CategoryManager';
-import "./categories.css"
 
-export const CategoryForm = ({ onCategorySubmit}) => {
+export const CategoryForm = ({ handleCreateCategory }) => {
     const [categoryLabel, setCategoryLabel] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const newCategory = {
-            label: categoryLabel
+            label: categoryLabel,
         };
 
-        createCategory(newCategory)
-            .then((response) => {
-                if (response.ok) {
-                    // Clear form fields after successful category creation
-                    setCategoryLabel('');
-                    onCategorySubmit(categoryLabel)
-                }
-            })
+        handleCreateCategory(newCategory); // Call the function to handle category creation
+        setCategoryLabel(''); // Clear the input field
     };
 
     return (
-        <div className="form">
+        <div className='form'>
             <h2 className="form-title">Create Category</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="categoryLabel">Name:</label>

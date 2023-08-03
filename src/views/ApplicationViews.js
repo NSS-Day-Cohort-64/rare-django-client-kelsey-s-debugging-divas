@@ -12,6 +12,9 @@ import { PostForm } from "../components/posts/PostForm";
 import { UserPosts } from "../components/posts/UserPosts";
 import { getCategories } from "../managers/CategoryManager";
 import { getAllTags } from "../managers/TagManager";
+import { EditPostDetails } from "../components/posts/EditPost"
+import { UserList } from "../components/users/UserList"
+
 
 export const ApplicationViews = ({ token, setToken }) => {
   const [categories, setCategories] = useState([]);
@@ -27,7 +30,8 @@ export const ApplicationViews = ({ token, setToken }) => {
     <Routes>
       <Route path="/login" element={<Login setToken={setToken} />} />
       <Route path="/register" element={<Register setToken={setToken} />} />
-      <Route element={<Authorized token={token} />}>
+      <Route element={<Authorized token={token} />} />
+        <Route path=":postId/edit" element={<EditPostDetails setToken={setToken} />} />
 
         <Route path="/posts">
           <Route index element={<PostList setToken={setToken} />} />
@@ -46,7 +50,10 @@ export const ApplicationViews = ({ token, setToken }) => {
           <Route index element={<TagList setToken={setToken} />} />
         </Route>
 
+      <Route path="/users">
+        <Route index element={<UserList setToken={setToken} />} />
       </Route>
+
     </Routes>
   );
 };

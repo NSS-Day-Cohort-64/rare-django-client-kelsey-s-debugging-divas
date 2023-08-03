@@ -1,27 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getCategories, createCategory } from "../../managers/CategoryManager";
 import { CategoryForm } from "./CategoryForm";
-import "./categories.css"
+import "./categories.css";
 
 export const Category = () => {
     // State to store categories
     const [categories, setCategories] = useState([]);
 
     // Fetch categories when the component mounts
-    React.useEffect(() => {
+    useEffect(() => {
         getCategories()
             .then((data) => setCategories(data))
             .catch((error) => console.error(error));
-    }, []); // Add 'categories' to the dependency array
+    }, []);
 
-    const handleCategorySubmit = (categoryLabel) => {
-        createCategory({ label: categoryLabel })
-            .then((newCategory) => {
-                setCategories([...categories, newCategory]);
+    const handleCreateCategory = (newCategory) => {
+        createCategory(newCategory)
+            .then((response) => {
+                console.log('API Response:', response);
+                if (response && response.id) {
+                    // Add the new category to the existing categories array
+                    const updatedCategories = [...categories, response];
+                    // Sort the categories alphabetically by label before updating the state
+                    updatedCategories.sort((a, b) => a.label.localeCompare(b.label));
+                    setCategories(updatedCategories);
+                } else {
+                    throw new Error('Failed to create category. Please try again later.');
+                }
             })
             .catch((error) => console.error(error));
     };
+
 
     return (
         <div className="page-container">
@@ -41,7 +51,7 @@ export const Category = () => {
                     </ul>
                 </div>
                 <div className="right-side">
-                    <CategoryForm onCategorySubmit={handleCategorySubmit} />
+                    <CategoryForm handleCreateCategory={handleCreateCategory} />
                 </div>
             </div>
         </div>

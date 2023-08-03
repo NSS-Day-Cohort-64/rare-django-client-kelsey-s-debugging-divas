@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createCategory } from '../../managers/CategoryManager';
 import "./categories.css"
 
-export const CategoryForm = () => {
+export const CategoryForm = ({ onCategorySubmit}) => {
     const [categoryLabel, setCategoryLabel] = useState('');
 
     const handleSubmit = (e) => {
@@ -17,8 +17,7 @@ export const CategoryForm = () => {
                 if (response.ok) {
                     // Clear form fields after successful category creation
                     setCategoryLabel('');
-                } else {
-                    throw new Error('Failed to create category. Please try again later.');
+                    onCategorySubmit(categoryLabel)
                 }
             })
     };

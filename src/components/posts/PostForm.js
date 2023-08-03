@@ -1,45 +1,36 @@
 import React, { useState } from 'react';
 import { createPost } from '../../managers/PostManager';
+import { useNavigate } from 'react-router-dom';
 
-export const PostForm = ({ onPostCreated, categories, tags }) => {
+export const PostForm = ({ categories, tags, token}) => {
     const [postTitle, setPostTitle] = useState('');
     const [postImageURL, setPostImageURL] = useState('');
     const [postContent, setPostContent] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const newPost = {
+            user_id: token,
             title: postTitle,
             image_url: postImageURL,
             content: postContent,
             category_id: selectedCategory,
-            tags: selectedTags,
-            // user_id: Add user ID here if applicable
+            tags: selectedTags
         };
 
         createPost(newPost)
             .then((response) => {
-                if (response.ok) {
-                    // Clear form fields after successful post creation
-                    setPostTitle('');
-                    setPostImageURL('');
-                    setPostContent('');
-                    setSelectedCategory('');
-                    setSelectedTags([]);
+                if (response) {
+                    navigate(`/posts/${response.id}`)
 
-                    // Notify parent component about the new post
-                    onPostCreated();
                 } else {
                     throw new Error('Failed to create post. Please try again later.');
                 }
             })
-            .catch((error) => {
-                // Handle error (e.g., display error message to the user)
-                console.error(error);
-            });
     };
 
     return (

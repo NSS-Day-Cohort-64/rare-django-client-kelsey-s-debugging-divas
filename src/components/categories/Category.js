@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { getCategories } from "../../managers/CategoryManager";
+import { getCategories, createCategory } from "../../managers/CategoryManager";
 import { CategoryForm } from "./CategoryForm";
 import "./categories.css"
 
 export const Category = () => {
     // State to store categories
-    const [categories, setCategories] = React.useState([]);
+    const [categories, setCategories] = useState([]);
 
     // Fetch categories when the component mounts
     React.useEffect(() => {
         getCategories()
             .then((data) => setCategories(data))
             .catch((error) => console.error(error));
-    }, [categories]); // Add 'categories' to the dependency array
+    }, []); // Add 'categories' to the dependency array
+
+    const handleCategorySubmit = (categoryLabel) => {
+        createCategory({ label: categoryLabel })
+            .then((newCategory) => {
+                setCategories([...categories, newCategory]);
+            })
+            .catch((error) => console.error(error));
+    };
 
     return (
         <div className="page-container">
@@ -33,8 +41,7 @@ export const Category = () => {
                     </ul>
                 </div>
                 <div className="right-side">
-                    {/* Display the CategoryForm component */}
-                    <CategoryForm />
+                    <CategoryForm onCategorySubmit={handleCategorySubmit} />
                 </div>
             </div>
         </div>

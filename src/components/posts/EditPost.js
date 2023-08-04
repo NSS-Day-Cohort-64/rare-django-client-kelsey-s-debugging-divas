@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { editPost, getSinglePost } from '../../managers/PostManager'
 import { getCategories } from '../../managers/CategoryManager'
+import { getAllTags } from '../../managers/TagManager'
 
 
-export function EditPostDetails({ onSave }) {
+
+export function EditPostDetails() {
 
   const { postId } = useParams()
 
-  const [categories, setCategories] = useState({})
+  const [categories, setCategories] = useState([])
+  const [tags, setTags] = useState([])
   const [post, setPost] = useState({
     user_id: 0,
     category_id: 0,
     title: "",
-    publication_date: "",
     image_url: "",
-    content: "",
-    approved: 0
+    content: ""
   })
+
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     getSinglePost(postId)
-      .then((response) => response.json())
       .then((data) => {
         setPost(data);
       });
-  }, []);
+  }, [postId]);
 
   useEffect(() => {
     getCategories()
@@ -34,25 +37,105 @@ export function EditPostDetails({ onSave }) {
       });
   }, []);
 
-
-  //this is totally a work in progress..
-  const handleSaveButtonClick = (event) => {
-    event.preventDefault();
-    editPost(postId, post)
-      .then((response) => response.json())
-      .then((updatedPost) => {
-        onSave(updatedPost);
-        setPost(updatedPost)
-        window.alert("Your Post Has Been Successfully Updated");
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the update process
-        console.error("Error updating post:", error.message);
+  useEffect(() => {
+    getAllTags()
+      .then((tagList) => {
+        setTags(tagList);
       });
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    editPost(postId, post)
+      .then(() => {
+        navigate(`/posts/${post.id}`)
+      })
   };
 
 
   return (
-    ""
-  )
+    <div>
+      <h2>Edit Post</h2>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="postTitle">Title:</label>
+        <input
+          type="text"
+          id="postTitle"
+          value={post.title}
+          onChange={(e) => {
+            const copy = { ...post };
+            copy.title = e.target.value;
+            setPost(copy)
+          }}
+          required
+        />
+        <br />
+        <label htmlFor="postImageURL">Image URL:</label>
+        <input
+          type="text"
+          id="postImageURL"
+          value={post.image_url}
+          onChange={(e) => {
+            const copy = { ...post };
+            copy.image_url = e.target.value;
+            setPost(copy)
+          }}
+          required
+        />
+        <br />
+        <label htmlFor="postContent">Content:</label>
+        <textarea
+          id="postContent"
+          value={post.content}
+          onChange={(e) => {
+            const copy = { ...post };
+            copy.content = e.target.value;
+            setPost(copy)
+          }}
+          required
+        />
+        <br />
+        <label htmlFor="categorySelect">Category:</label>
+        <select
+          id="categorySelect"
+          value={post.category_id}
+          onChange={(e) => {
+            const copy = { ...post };
+            copy.category_id = e.target.value;
+            setPost(copy)
+          }}
+          required
+        >
+          <option value="">Select a category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.label}
+            </option>
+          ))}
+        </select>
+        <br />
+        <button type="submit">Edit Post</button>
+      </form>
+    </div>
+  );
 }
+
+{/* <br />
+        <label>Tags:</label>
+{
+  tags.map((tag) => (
+    <label key={tag.id}>
+      <input
+        type="checkbox"
+        value={post.tag.id}
+        checked={selectedTags.includes(tag.id)}
+        onChange={(e) =>
+          e.target.checked
+            ? setSelectedTags([...selectedTags, tag.id])
+            : setSelectedTags(selectedTags.filter((id) => id !== tag.id))
+        }
+      />
+      {tag.label}
+    </label>
+  ))
+} */}

@@ -1,17 +1,11 @@
 export const getAllPosts = () => {
   return fetch("http://localhost:8088/posts")
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to fetch post.");
-      }
-    });
+    .then(response => response.json())
 };
 
 export const getSinglePost = (postId) => {
   return fetch(`http://localhost:8088/posts/${postId}`)
-    .then(res => res.json())
+    .then(response => response.json())
 }
 
 export const createPost = (newPost) => {
@@ -19,36 +13,24 @@ export const createPost = (newPost) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Accept": "application/json"
     },
     body: JSON.stringify(newPost),
   })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to create post.");
-      }
-    });
+
 };
 export const getUserPosts = (userId) => {
   return fetch(`http://localhost:8088/posts?user_id=${userId}`)
-    .then(res => res.json())
+    .then(response => response.json())
 }
 
-export const editPost = (postId, updatedPostData) => {
+export const editPost = (postId, post) => {
   return fetch(`http://localhost:8088/posts/${postId}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(updatedPostData),
+    body: JSON.stringify(post),
   })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to edit post.");
-      }
-    });
 };
 

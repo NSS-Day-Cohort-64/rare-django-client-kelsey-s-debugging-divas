@@ -18,19 +18,11 @@ export const TagList = () => {
 
   const handleCreateTag = (newTag) => {
     createTag(newTag)
-      .then((response) => {
-        console.log('API Response:', response);
-        if (response && response.id) {
-          // Add the new tag to the existing categories array
-          const updatedTags = [...tags, response];
-          // Sort the tags alphabetically by label before updating the state
-          updatedTags.sort((a, b) => a.label.localeCompare(b.label));
-          setTags(updatedTags);
-        } else {
-          throw new Error('Failed to create tag. Please try again later.');
-        }
+      .then(() => {
+        const updatedTags = [...tags, newTag];
+        updatedTags.sort((a, b) => a.label.localeCompare(b.label));
+        setTags(updatedTags);
       })
-      .catch((error) => console.error(error));
   };
 
   return (

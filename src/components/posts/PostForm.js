@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createPost } from '../../managers/PostManager';
 import { useNavigate } from 'react-router-dom';
 
-export const PostForm = ({ categories, tags, token}) => {
+export const PostForm = ({ categories, tags, token }) => {
     const [postTitle, setPostTitle] = useState('');
     const [postImageURL, setPostImageURL] = useState('');
     const [postContent, setPostContent] = useState('');
@@ -26,9 +26,6 @@ export const PostForm = ({ categories, tags, token}) => {
             .then((response) => {
                 if (response) {
                     navigate(`/posts/${response.id}`)
-
-                } else {
-                    throw new Error('Failed to create post. Please try again later.');
                 }
             })
     };

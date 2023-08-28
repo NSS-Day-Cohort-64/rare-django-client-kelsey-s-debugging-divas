@@ -1,5 +1,5 @@
 export const createCategory = (newCategory) => {
-    return fetch("http://localhost:8088/categories", {
+    return fetch("http://localhost:8000/categories", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -10,6 +10,6 @@ export const createCategory = (newCategory) => {
 }
 
 export const getCategories = () => {
-    return fetch("http://localhost:8088/categories")
+    return fetch("http://localhost:8000/categories")
         .then(response => response.json())
 };

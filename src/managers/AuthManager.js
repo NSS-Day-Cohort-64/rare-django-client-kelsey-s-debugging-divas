@@ -1,5 +1,5 @@
 export const loginUser = (user) => {
-  return fetch("http://localhost:8088/login", {
+  return fetch("http://localhost:8000/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

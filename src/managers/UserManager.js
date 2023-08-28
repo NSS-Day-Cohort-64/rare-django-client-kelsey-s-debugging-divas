@@ -1,4 +1,4 @@
 export const getAllUsers = () => {
-    return fetch("http://localhost:8088/users")
-        .then(response => response.json())
-};
+    return fetch(`http://localhost:8000/users`)
+    .then( res => res.json())
+  }

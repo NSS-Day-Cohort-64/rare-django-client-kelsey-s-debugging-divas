@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { registerUser } from "../../managers/AuthManager"
 
+
 export const Register = ({setToken}) => {
   const firstName = useRef()
   const lastName = useRef()
@@ -31,13 +32,14 @@ export const Register = ({setToken}) => {
         .then(res => {
           if ("valid" in res && res.valid) {
             setToken(res.token)
-            navigate("/")
           }
+          navigate("/posts")
         })
     } else {
       passwordDialog.current.showModal()
     }
   }
+  
 
   return (
     <section className="columns is-centered">
@@ -88,13 +90,14 @@ export const Register = ({setToken}) => {
             </div>
           </div>
         </div>
-
         <div className="field">
           <label className="label">Bio</label>
           <div className="control">
             <textarea className="textarea" placeholder="Tell us about yourself..." ref={bio}></textarea>
           </div>
         </div>
+
+        
 
         <div className="field is-grouped">
           <div className="control">
@@ -109,3 +112,4 @@ export const Register = ({setToken}) => {
     </section>
   )
 }
+

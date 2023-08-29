@@ -23,13 +23,14 @@ export const createPost = (newPost) => {
   })
 
 };
-// export const getUserPosts = (userId) => {
-//   return fetch(`http://localhost:8000/posts?user_id=${userId}`)
-//     .then(response => response.json())
-// }
 
-export const getUserPosts = (author_id) => {
-  return fetch(`http://localhost:8000/posts?author_id=${author_id}`)
+
+export const getUserPosts = (token) => {
+  return fetch(`http://localhost:8000/posts?token=${token}`, {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
     .then(response => response.json());
 }
 

@@ -10,6 +10,10 @@ export const createCategory = (newCategory) => {
 }
 
 export const getCategories = () => {
-    return fetch("http://localhost:8000/categories")
+    return fetch("http://localhost:8000/categories", {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("auth_token")}`
+        }
+    })
         .then(response => response.json())
 };

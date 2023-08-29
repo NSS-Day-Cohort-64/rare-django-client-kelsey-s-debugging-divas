@@ -1,31 +1,16 @@
-import { useState, useEffect } from "react"
-import { Link } from 'react-router-dom'
-import { getAllTags, createTag } from "../../managers/TagManager"
-import { TagForm } from "./TagForm";
-import "./tags.css"
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { getAllTags } from "../../managers/TagManager";
+import "./tags.css";
 
 export const TagList = () => {
+  const [tags, setTags] = useState([]);
 
-  const [tags, setTags] = useState([])
-
-  useEffect(
-    () => {
-      getAllTags().then((tagData) => setTags(tagData))
-    },
-    []
-  )
-
-  const handleCreateTag = (newTag) => {
-    createTag(newTag)
-      .then(() => {
-        const updatedTags = [...tags, newTag];
-        setTags(updatedTags);
-      })
-  };
+  useEffect(() => {
+    getAllTags().then((tagData) => setTags(tagData));
+  }, []);
 
   return (
-
     <div className="page-container">
       <h1 className="page-header">Tags</h1>
       <div className="tag-container">
@@ -35,17 +20,19 @@ export const TagList = () => {
               <li key={tag.id} className="list-items">
                 <div className="list-name">{tag.label}</div>
                 <div className="edit-and-delete">
-                  <button className="edit-button"><Link to={`/tags/${tag.id}/edit`}>Edit</Link></button>{" "}
+                  <button className="edit-button">
+                    <Link to={`/tags/${tag.id}/edit`}>Edit</Link>
+                  </button>{""}
                   <button className="delete-button">Delete</button>
                 </div>
               </li>
             ))}
           </ul>
-        </div>
-        <div className="right-side">
-          <TagForm handleCreateTag={handleCreateTag} />
+          <button className="create-button">
+            <Link to="/tags/create">Create New Tag</Link>
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};

@@ -19,8 +19,6 @@ export const Category = () => {
         createCategory(newCategory)
             .then(() => {
                 const updatedCategories = [...categories, newCategory];
-                // Sort the categories alphabetically by label before updating the state
-                updatedCategories.sort((a, b) => a.label.localeCompare(b.label));
                 setCategories(updatedCategories);
             })
     };

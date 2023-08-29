@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { getAllTags, createTag } from "../../managers/TagManager"
 import { TagForm } from "./TagForm";
 import "./tags.css"
@@ -20,7 +20,6 @@ export const TagList = () => {
     createTag(newTag)
       .then(() => {
         const updatedTags = [...tags, newTag];
-        updatedTags.sort((a, b) => a.label.localeCompare(b.label));
         setTags(updatedTags);
       })
   };

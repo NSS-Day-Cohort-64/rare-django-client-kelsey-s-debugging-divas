@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { getUserPosts } from '../../managers/PostManager'
 import "./posts.css";
 
-export function UserPosts({ token }) {
+export function UserPosts({ author_id }) {
   const [userPosts, setUserPosts] = useState([])
 
   useEffect(
     () => {
-      getUserPosts(token).then((userPostsData) => setUserPosts(userPostsData))
+      getUserPosts(author_id).then((userPostsData) => setUserPosts(userPostsData))
     },
-    [token]
+    [author_id]
   )
 
   return (

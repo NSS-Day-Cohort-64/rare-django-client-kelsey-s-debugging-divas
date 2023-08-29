@@ -14,6 +14,7 @@ import { getCategories } from "../managers/CategoryManager";
 import { getAllTags } from "../managers/TagManager";
 import { EditPostDetails } from "../components/posts/EditPost"
 import { UserList } from "../components/users/UserList"
+import { TagForm } from "../components/tags/TagForm";
 
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -48,6 +49,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 
       <Route path="/tags">
         <Route index element={<TagList setToken={setToken} />} />
+      </Route>
+
+      <Route path="/tags/create">
+        <Route index element={<TagForm setToken={setToken} />} />
       </Route>
 
       <Route path="/users">

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { createTag } from '../../managers/TagManager';
+import { createTag } from "../../managers/TagManager";
+import { useNavigate } from 'react-router-dom';
 
-export const TagForm = ({ handleCreateTag }) => {
+export const TagForm = ({ token }) => {
   const [tagLabel, setTagLabel] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,8 +13,14 @@ export const TagForm = ({ handleCreateTag }) => {
       label: tagLabel
     };
 
-    handleCreateTag(newTag); // Call the function to handle category creation
-    setTagLabel(''); // Clear the input field
+    createTag(newTag, token).then((response) => {
+      // Check if the response status is 201 (Created)
+      if (response.status === 201) {
+        setTagLabel('');
+        // Navigate the user back to the tag list
+        navigate('/tags');
+      }
+    });
   };
 
   return (

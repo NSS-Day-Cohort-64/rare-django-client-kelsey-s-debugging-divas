@@ -17,3 +17,12 @@ export const getAllTags = (token) => {
     }
   }).then(response => response.json());
 };
+
+export const deleteTag = (tagId, token) => {
+  return fetch(`http://localhost:8000/tags/${tagId}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
+}

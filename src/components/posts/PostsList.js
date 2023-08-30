@@ -5,7 +5,7 @@ import { getAllPosts } from "../../managers/PostManager";
 
 export const PostList = () => {
   const [posts, setPosts] = useState([]);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     getAllPosts().then((postsData) => setPosts(postsData));

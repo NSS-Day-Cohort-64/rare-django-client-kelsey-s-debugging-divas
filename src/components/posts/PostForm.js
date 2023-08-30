@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPost } from '../../managers/PostManager';
 import { useNavigate } from 'react-router-dom';
-import { userResponse } from '../../managers/UserManager';
+import { getUserByToken } from '../../managers/TokenManager';
 
 export const PostForm = ({ categories, tags, token }) => {
     const [postTitle, setPostTitle] = useState('');
@@ -13,28 +13,29 @@ export const PostForm = ({ categories, tags, token }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        const userResponseResult = await userResponse(token);
-    
-        if (userResponseResult.ok) {
-            const user = await userResponseResult.json();
-            const userId = user.id;
-    
+
+        const user = await getUserByToken(token);
+
+        if (user) {
             const newPost = {
-                author: userId,
+                author: user.user,
                 title: postTitle,
                 image_url: postImageURL,
                 content: postContent,
-                category_id: selectedCategory,
+                category: selectedCategory,
+                approved: true,
+                publication_date: new Date().toISOString(),
                 tags: selectedTags
             };
 
             createPost(newPost)
-                .then((response) => {
-                    if (response) {
-                        navigate(`/posts/${response.id}`);
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data) {
+                        navigate(`/posts/${data.id}`);
                     }
                 });
+
         }
     };
 

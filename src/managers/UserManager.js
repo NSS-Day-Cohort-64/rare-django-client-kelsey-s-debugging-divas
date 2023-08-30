@@ -9,7 +9,7 @@ export const userResponse = (token) => {
 fetch('http://localhost:8000/users/me/', {
     method: 'GET',
     headers: {
-        'Authorization': `Token ${token}`
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
     }
 })
 };

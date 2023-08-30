@@ -7,8 +7,12 @@ export const getAllPosts = () => {
     .then(response => response.json())
 };
 
-export const getSinglePost = (postId) => {
-  return fetch(`http://localhost:8000/posts/${postId}`)
+export const getSinglePost = (id) => {
+  return fetch(`http://localhost:8000/posts/${id}`, {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
     .then(response => response.json())
 }
 

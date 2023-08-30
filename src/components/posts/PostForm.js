@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createPost } from '../../managers/PostManager';
 import { useNavigate } from 'react-router-dom';
+import { getUserByToken } from '../../managers/TokenManager';
 
 export const PostForm = ({ categories, tags, token }) => {
     const [postTitle, setPostTitle] = useState('');
@@ -8,26 +9,34 @@ export const PostForm = ({ categories, tags, token }) => {
     const [postContent, setPostContent] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const newPost = {
-            user_id: token,
-            title: postTitle,
-            image_url: postImageURL,
-            content: postContent,
-            category_id: selectedCategory,
-            tags: selectedTags
-        };
+        const user = await getUserByToken(token);
 
-        createPost(newPost)
-            .then((response) => {
-                if (response) {
-                    navigate(`/posts/${response.id}`)
-                }
-            })
+        if (user) {
+            const newPost = {
+                author: user.user,
+                title: postTitle,
+                image_url: postImageURL,
+                content: postContent,
+                category: selectedCategory,
+                approved: true,
+                publication_date: new Date().toISOString(),
+                tags: selectedTags
+            };
+
+            createPost(newPost)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data) {
+                        navigate(`/posts/${data.id}`);
+                    }
+                });
+
+        }
     };
 
     return (

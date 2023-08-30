@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createCategory } from '../../managers/CategoryManager';
 
-export const CategoryForm = ({ handleCreateCategory }) => {
+
+export const CategoryForm = () => {
     const [categoryLabel, setCategoryLabel] = useState('');
+    const [categories, setCategories] = useState([]);
+    const navigate = useNavigate()
+
+
+    const handleCreateCategory = (newCategory) => {
+        createCategory(newCategory)
+            .then(() => {
+                const updatedCategories = [...categories, newCategory];
+                setCategories(updatedCategories);
+                navigate("/categories")
+            })
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();

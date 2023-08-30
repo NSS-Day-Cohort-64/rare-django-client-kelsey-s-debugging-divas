@@ -14,11 +14,10 @@ function PostDetails() {
   return (
     <section className="post">
       <h3 className="post__title">{post.title}</h3>
-      <div className="post__author">{post.author?.first_name} {post.author?.last_name}</div>
-      <div className="post__category">{post.category?.label}</div>
-      <div className="post__publicationDate">{post.publication_date}</div>
-      <br />
       <div className="post__content">{post.content}</div>
+      <img src={post.image_url} className="article-picture" />
+      <div className="post__publicationDate">{post.publication_date}</div>
+      <div className="post__author">author: {post.author?.first_name} {post.author?.last_name}</div>
     </section>
   )
 }
@@ -26,8 +25,3 @@ function PostDetails() {
 export default PostDetails
 
 
-
-Header image(if exists)
-  Content
-Publication date(MM / DD / YYYY)
-Author's Display Name

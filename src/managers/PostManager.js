@@ -8,8 +8,12 @@ export const getAllPosts = () => {
 };
 
 export const getSinglePost = (postId) => {
-  return fetch(`http://localhost:8000/posts/${postId}`)
-    .then(response => response.json())
+  return fetch(`http://localhost:8000/posts/${postId}`, {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
+    .then(response => response.json());
 }
 
 export const createPost = (newPost) => {
@@ -24,7 +28,6 @@ export const createPost = (newPost) => {
 
 };
 
-
 export const getUserPosts = (token) => {
   return fetch(`http://localhost:8000/posts?token=${token}`, {
     headers: {
@@ -33,9 +36,6 @@ export const getUserPosts = (token) => {
   })
     .then(response => response.json());
 }
-
-
-
 
 
 export const editPost = (postId, post) => {

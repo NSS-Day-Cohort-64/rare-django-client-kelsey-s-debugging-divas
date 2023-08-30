@@ -36,8 +36,6 @@ export const getUserPosts = (token) => {
 
 
 
-
-
 export const editPost = (postId, post) => {
   return fetch(`http://localhost:8000/posts/${postId}`, {
     method: "PUT",

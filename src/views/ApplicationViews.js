@@ -15,6 +15,7 @@ import { getAllTags } from "../managers/TagManager";
 import { EditPostDetails } from "../components/posts/EditPost"
 import { UserList } from "../components/users/UserList"
 import { TagForm } from "../components/tags/TagForm";
+import { EditTagForm } from "../components/tags/EditTagForm";
 
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -53,6 +54,10 @@ export const ApplicationViews = ({ token, setToken }) => {
 
       <Route path="/tags/create">
         <Route index element={<TagForm setToken={setToken} />} />
+      </Route>
+
+      <Route path="/tags/:tagId/edit">
+        <Route index element={<EditTagForm setToken={setToken} />} />
       </Route>
 
       <Route path="/users">

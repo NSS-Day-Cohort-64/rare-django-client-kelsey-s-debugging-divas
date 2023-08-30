@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getCategories, createCategory } from "../../managers/CategoryManager";
-import { CategoryForm } from "./CategoryForm";
+import { getCategories } from "../../managers/CategoryManager";
 import "./categories.css";
 
 export const Category = () => {
@@ -14,14 +13,6 @@ export const Category = () => {
             .then((data) => setCategories(data))
             .catch((error) => console.error(error));
     }, []);
-
-    const handleCreateCategory = (newCategory) => {
-        createCategory(newCategory)
-            .then(() => {
-                const updatedCategories = [...categories, newCategory];
-                setCategories(updatedCategories);
-            })
-    };
 
 
     return (
@@ -42,7 +33,7 @@ export const Category = () => {
                     </ul>
                 </div>
                 <div className="right-side">
-                    <CategoryForm handleCreateCategory={handleCreateCategory} />
+                    <button className="create-button"><Link to={`/categories/create`}>Create New Category</Link></button>
                 </div>
             </div>
         </div>

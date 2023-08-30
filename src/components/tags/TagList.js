@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAllTags, deleteTag } from "../../managers/TagManager";
+import { getAllTags, deleteTag } from "../../managers/TagManager";
 import "./tags.css";
 
 export const TagList = () => {
@@ -34,8 +35,6 @@ export const TagList = () => {
                 <div className="edit-and-delete">
                   <button className="edit-button">
                     <Link to={`/tags/${tag.id}/edit`}>Edit</Link>
-                  </button>{""}
-                  <button className="delete-button">Delete
                   </button>{" "}
                   <button
                     className="delete-button"

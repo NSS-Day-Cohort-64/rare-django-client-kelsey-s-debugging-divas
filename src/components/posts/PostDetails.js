@@ -24,3 +24,10 @@ function PostDetails() {
 }
 
 export default PostDetails
+
+
+
+Header image(if exists)
+  Content
+Publication date(MM / DD / YYYY)
+Author's Display Name

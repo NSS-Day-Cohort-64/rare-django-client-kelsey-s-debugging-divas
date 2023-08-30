@@ -29,7 +29,6 @@ export const createPost = (newPost) => {
 
 };
 
-
 export const getUserPosts = (token) => {
   return fetch(`http://localhost:8000/posts?token=${token}`, {
     headers: {
@@ -38,9 +37,6 @@ export const getUserPosts = (token) => {
   })
     .then(response => response.json());
 }
-
-
-
 
 
 export const editPost = (postId, post) => {

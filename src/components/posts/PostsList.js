@@ -23,7 +23,7 @@ export const PostList = () => {
             </div>
             <section>
               <div>
-                {postObject.user.first_name} {postObject.user.last_name}
+                {postObject.author.first_name} {postObject.author.last_name}
               </div>
               <div>{postObject.category.label}</div>
             </section>

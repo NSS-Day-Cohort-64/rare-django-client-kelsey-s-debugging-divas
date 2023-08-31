@@ -43,7 +43,8 @@ export const editPost = (postId, post) => {
   return fetch(`http://localhost:8000/posts/${postId}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
     },
     body: JSON.stringify(post),
   })

@@ -39,8 +39,12 @@ export function UserPosts({ token }) {
                 {postObject.author.first_name} {postObject.author.last_name}
               </div>
               <div>{postObject.category.label}</div> <br></br>
+
               <div className='post-buttons'>
-                <button class="delete-icon-button"><i class="fas fa-trash" onClick={() => handleDeletePost(postObject.id)}></i></button>
+                <button className="delete-icon-button"><i className="fas fa-trash" onClick={() => handleDeletePost(postObject.id)}></i></button>
+                <Link to={`/posts/${postObject.id}/edit`} className="edit-icon-button">
+                  <i className="fas fa-cog"></i>
+                </Link>
               </div>
             </section>
           </div>

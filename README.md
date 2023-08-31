@@ -1,4 +1,4 @@
-# Rare: The Publishing Platform for the Discerning Writer
+
 
 
 ## Application Overview

@@ -2,31 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { editPost, getSinglePost } from '../../managers/PostManager'
 import { getCategories } from '../../managers/CategoryManager'
-import { getAllTags } from '../../managers/TagManager'
 
 
 
-export function EditPostDetails() {
 
-  const { postId } = useParams()
-
-  const [categories, setCategories] = useState([])
-  const [tags, setTags] = useState([])
-  const [post, setPost] = useState({
-    user_id: 0,
-    category_id: 0,
-    title: "",
-    image_url: "",
-    content: ""
-  })
-
+export const EditPostDetails = () => {
   const navigate = useNavigate()
+  const { postId } = useParams();
+  const [categories, setCategories] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState()
 
+  const [currentPost, setCurrentPost] = useState({})
 
   useEffect(() => {
     getSinglePost(postId)
       .then((data) => {
-        setPost(data);
+        setCurrentPost(data);
+        setSelectedCategory(data.category.id)
       });
   }, [postId]);
 
@@ -37,105 +29,98 @@ export function EditPostDetails() {
       });
   }, []);
 
-  useEffect(() => {
-    getAllTags()
-      .then((tagList) => {
-        setTags(tagList);
-      });
-  }, []);
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    editPost(postId, post)
-      .then(() => {
-        navigate(`/posts/${post.id}`)
-      })
-  };
-
-
   return (
-    <div>
-      <h2>Edit Post</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="postTitle">Title:</label>
-        <input
-          type="text"
-          id="postTitle"
-          value={post.title}
-          onChange={(e) => {
-            const copy = { ...post };
-            copy.title = e.target.value;
-            setPost(copy)
-          }}
-          required
-        />
-        <br />
-        <label htmlFor="postImageURL">Image URL:</label>
-        <input
-          type="text"
-          id="postImageURL"
-          value={post.image_url}
-          onChange={(e) => {
-            const copy = { ...post };
-            copy.image_url = e.target.value;
-            setPost(copy)
-          }}
-          required
-        />
-        <br />
-        <label htmlFor="postContent">Content:</label>
-        <textarea
-          id="postContent"
-          value={post.content}
-          onChange={(e) => {
-            const copy = { ...post };
-            copy.content = e.target.value;
-            setPost(copy)
-          }}
-          required
-        />
-        <br />
-        <label htmlFor="categorySelect">Category:</label>
-        <select
-          id="categorySelect"
-          value={post.category_id}
-          onChange={(e) => {
-            const copy = { ...post };
-            copy.category_id = e.target.value;
-            setPost(copy)
-          }}
-          required
-        >
-          <option value="">Select a category</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.label}
-            </option>
-          ))}
-        </select>
-        <br />
-        <button type="submit">Edit Post</button>
-      </form>
-    </div>
-  );
-}
+    <form className="postForm">
+      <h2 className="postForm__title">Edit Post</h2>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="title">Title: </label>
+          <input
+            type="text"
+            name="title"
+            required autoFocus
+            className="form-control"
+            value={currentPost.title}
+            onChange={(evt) => {
+              setCurrentPost({ ...currentPost, title: (evt.target.value) })
+            }
+            }
+          />
+        </div>
+      </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="image_url">Image URL: </label>
+          <input
+            type="text"
+            name="image_url"
+            required autoFocus
+            className="form-control"
+            value={currentPost.image_url}
+            onChange={(evt) => {
+              setCurrentPost({ ...currentPost, image_url: (evt.target.value) })
+            }
+            }
+          />
+        </div>
+      </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="content">Content: </label>
+          <input
+            type="text"
+            name="content"
+            required autoFocus
+            className="form-control"
+            value={currentPost.content}
+            onChange={(evt) => {
+              setCurrentPost({ ...currentPost, content: (evt.target.value) })
+            }
+            }
+          />
+        </div>
+      </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="category">Category: </label>
+          <select
+            name="category"
+            required autoFocus
+            className="form-control"
+            value={selectedCategory}
+            onChange={(evt) => {
+              setSelectedCategory(parseInt(evt.target.value))
+            }
+            }
+          >
+            <option value="">Select Category</option>
+            {categories.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </fieldset>
 
-{/* <br />
-        <label>Tags:</label>
-{
-  tags.map((tag) => (
-    <label key={tag.id}>
-      <input
-        type="checkbox"
-        value={post.tag.id}
-        checked={selectedTags.includes(tag.id)}
-        onChange={(e) =>
-          e.target.checked
-            ? setSelectedTags([...selectedTags, tag.id])
-            : setSelectedTags(selectedTags.filter((id) => id !== tag.id))
-        }
-      />
-      {tag.label}
-    </label>
-  ))
-} */}
+
+      <button type="submit"
+        onClick={evt => {
+          // Prevent form from being submitted
+          evt.preventDefault()
+
+          const post = {
+            title: currentPost.title,
+            image_url: currentPost.image_url,
+            content: currentPost.content,
+            category: selectedCategory,
+          }
+
+          // Send POST request to your API
+          editPost(postId, post)
+            .then(() => navigate("/posts"))
+        }}
+        className="btn btn-primary">save</button>
+    </form>
+  )
+}

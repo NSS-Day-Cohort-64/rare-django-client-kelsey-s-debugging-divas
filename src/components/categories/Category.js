@@ -48,9 +48,10 @@ export const Category = () => {
                             </li>
                         ))}
                     </ul>
+                    <button className="create-button"><Link to={`/categories/create`}>Create New Category</Link></button>
                 </div>
                 <div className="right-side">
-                    <button className="create-button"><Link to={`/categories/create`}>Create New Category</Link></button>
+
                 </div>
             </div>
         </div>

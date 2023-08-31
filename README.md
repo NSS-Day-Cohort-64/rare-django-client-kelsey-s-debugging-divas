@@ -2,8 +2,7 @@
 
 
 ## Application Overview
-   Our app aims to empower authors by providing them with a comprehensive platform to create, edit, and manage their posts effectively. With features like post creation, editing, categorization, analytics, and collaboration, authors can streamline their writing process and enhance their overall productivity.
-
+   Our app aims to empower authors by providing them with a comprehensive platform to create, edit, and manage their posts effectively. With features like post creation, editing, categorization, and deleting authors can easily share their work with other authors around the world.
 
 
  
@@ -69,3 +68,13 @@ npm install
 ```sh
 npm start
 ```
+
+#### Register and Login
+
+![Logging into the app](public/RareRegister.gif) 
+
+
+### Contributors 
+-[Kelsey Lemmer](https://github.com/kelseylemmer)
+-[Austin Warrick](https://github.com/austin0102)
+-[Randy Hamm](https://github.com/randykhamm93)

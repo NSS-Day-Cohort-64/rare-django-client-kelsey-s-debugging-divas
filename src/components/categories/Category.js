@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getCategories } from "../../managers/CategoryManager";
+import { getCategories, deleteCategory } from "../../managers/CategoryManager";
 import "./categories.css";
 
 export const Category = () => {
@@ -14,6 +14,18 @@ export const Category = () => {
             .catch((error) => console.error(error));
     }, []);
 
+    const handleDeleteCategory = (categoryId) => {
+        const shouldDelete = window.confirm("Are you sure you want to delete this category?");
+
+        if (shouldDelete) {
+            deleteCategory(categoryId).then(() => {
+                // Filter out the deleted category and update the state
+                const updatedCategories = categories.filter((category) => category.id !== categoryId);
+                setCategories(updatedCategories);
+            });
+        }
+    };
+
 
     return (
         <div className="page-container">
@@ -26,7 +38,12 @@ export const Category = () => {
                                 <div className="list-name">{category.label}{" "}</div>
                                 <div className="edit-and-delete">
                                     <button className="edit-button"><Link to={`/categories/${category.id}/edit`}>Edit</Link></button>{" "}
-                                    <button className="delete-button">Delete</button>
+                                    <button
+                                        className="delete-button"
+                                        onClick={() => handleDeleteCategory(category.id)}
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             </li>
                         ))}
